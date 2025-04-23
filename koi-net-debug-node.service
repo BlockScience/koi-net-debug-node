@@ -1,0 +1,11 @@
+[Unit]
+Description=KOI-net Debug Node Service
+After=network.target
+
+[Service]
+WorkingDirectory=/home/dev/koi-net-debug-node
+ExecStart=/home/dev/koi-net-debug-node/venv/bin/python3 -m debug_node
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

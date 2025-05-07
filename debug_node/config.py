@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 from koi_net.protocol.node import NodeProfile, NodeType, NodeProvides
-from koi_net.config import Config, EnvConfig, KoiNetConfig
+from koi_net.config import NodeConfig, EnvConfig, KoiNetConfig
 
 
 class DebugEnvConfig(EnvConfig):
@@ -11,7 +11,7 @@ class DebugEnvConfig(EnvConfig):
 class DebugConfig(BaseModel):
     slack_channel: str | None = None
 
-class DebugNodeConfig(Config):
+class DebugNodeConfig(NodeConfig):
     koi_net: KoiNetConfig | None = Field(default_factory = lambda: 
         KoiNetConfig(
             node_name="slack-sensor",

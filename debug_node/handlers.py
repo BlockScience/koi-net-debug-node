@@ -12,7 +12,7 @@ from .core import slack_app, node
 
 
 @node.processor.register_handler(HandlerType.RID)
-def dashboard(processor: ProcessorInterface, kobj: KnowledgeObject):
+def dashboard_reporter(processor: ProcessorInterface, kobj: KnowledgeObject):
     if kobj.source == KnowledgeSource.External and kobj.event_type is not None:
         
         url = None
@@ -24,7 +24,7 @@ def dashboard(processor: ProcessorInterface, kobj: KnowledgeObject):
         hyperlink = f" - <{url}|link>" if url else ""
     
         slack_app.client.chat_postMessage(
-            channel="C088UBMRXC5",
+            channel=node.config.debug.slack_channel,
             text=f"`[{kobj.event_type}] {kobj.rid}`{hyperlink}"
         )
         
@@ -32,7 +32,7 @@ def dashboard(processor: ProcessorInterface, kobj: KnowledgeObject):
             return STOP_CHAIN
     
 @node.processor.register_handler(HandlerType.Network, rid_types=[KoiNetNode])
-def coordinator_contact(processor: ProcessorInterface, kobj: KnowledgeObject):
+def greedy_contact(processor: ProcessorInterface, kobj: KnowledgeObject):
     # when I found out about a new node
     if kobj.normalized_event_type != EventType.NEW: 
         return
@@ -47,6 +47,7 @@ def coordinator_contact(processor: ProcessorInterface, kobj: KnowledgeObject):
         source=kobj.rid,
         target=processor.identity.rid,
         edge_type=EdgeType.WEBHOOK,
+        # subscribes to all events for provided RID types
         rid_types=node_profile.provides.event
     ))
     

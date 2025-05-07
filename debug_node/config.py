@@ -1,15 +1,25 @@
-import os
-import json
-from dotenv import load_dotenv
+from pydantic import BaseModel, Field
+from koi_net.protocol.node import NodeProfile, NodeType, NodeProvides
+from koi_net.config import Config, EnvConfig, KoiNetConfig
 
-load_dotenv()
 
-HOST = "127.0.0.1"
-PORT = 8500
-URL = f"http://{HOST}:{PORT}/koi-net"
+class DebugEnvConfig(EnvConfig):
+    slack_bot_token: str | None = "SLACK_BOT_TOKEN"
+    slack_signing_secret: str | None = "SLACK_SIGNING_SECRET"
+    slack_app_token: str | None = "SLACK_APP_TOKEN"
+    
+class DebugConfig(BaseModel):
+    slack_channel: str | None = None
 
-FIRST_CONTACT = "http://127.0.0.1:8000/koi-net"
-
-SLACK_BOT_TOKEN = os.environ["SLACK_BOT_TOKEN"]
-SLACK_SIGNING_SECRET = os.environ["SLACK_SIGNING_SECRET"]
-SLACK_APP_TOKEN = os.environ["SLACK_APP_TOKEN"]
+class DebugNodeConfig(Config):
+    koi_net: KoiNetConfig | None = Field(default_factory = lambda: 
+        KoiNetConfig(
+            node_name="slack-sensor",
+            node_profile=NodeProfile(
+                node_type=NodeType.FULL,
+                provides=NodeProvides()
+            )
+        )
+    )
+    env: DebugEnvConfig | None = Field(default_factory=DebugEnvConfig)
+    debug: DebugConfig | None = Field(default_factory=DebugConfig)

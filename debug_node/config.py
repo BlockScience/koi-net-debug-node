@@ -14,7 +14,7 @@ class DebugConfig(BaseModel):
 class DebugNodeConfig(NodeConfig):
     koi_net: KoiNetConfig | None = Field(default_factory = lambda: 
         KoiNetConfig(
-            node_name="slack-sensor",
+            node_name="debug",
             node_profile=NodeProfile(
                 node_type=NodeType.FULL,
                 provides=NodeProvides()

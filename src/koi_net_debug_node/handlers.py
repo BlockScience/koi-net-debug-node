@@ -11,7 +11,7 @@ from .core import slack_app, node
 
 
 @node.pipeline.register_handler(HandlerType.RID)
-def dashboard_reporter(ctx, kobj: KnowledgeObject):
+def dashboard_reporter(ctx: HandlerContext, kobj: KnowledgeObject):
     if kobj.source is not None and kobj.event_type is not None:
         
         url = None

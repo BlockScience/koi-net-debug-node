@@ -1,3 +1,3 @@
-from .core import node
+from .core import DebugNode
 
-node.server.run()
+DebugNode().run()

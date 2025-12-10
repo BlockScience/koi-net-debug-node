@@ -1,6 +1,10 @@
-from pydantic import BaseModel, Field
-from koi_net.protocol.node import NodeProfile, NodeType, NodeProvides
-from koi_net.config import NodeConfig, EnvConfig, KoiNetConfig
+from pydantic import BaseModel
+from koi_net.config.full_node import (
+    FullNodeConfig, 
+    KoiNetConfig, 
+    NodeProfile, 
+)
+from koi_net.config.core import EnvConfig
 
 
 class DebugEnvConfig(EnvConfig):
@@ -11,13 +15,9 @@ class DebugEnvConfig(EnvConfig):
 class DebugConfig(BaseModel):
     slack_channel: str | None = None
 
-class DebugNodeConfig(NodeConfig):
+class DebugNodeConfig(FullNodeConfig):
     koi_net: KoiNetConfig = KoiNetConfig(
         node_name="debug",
-        node_profile=NodeProfile(
-            node_type=NodeType.FULL,
-            provides=NodeProvides()
-        )
-    )
+        node_profile=NodeProfile())
     env: DebugEnvConfig = DebugEnvConfig()
     debug: DebugConfig = DebugConfig()

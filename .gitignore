@@ -1,9 +1,8 @@
 rid_cache
-identity.json
-events_queue.json
-venv
+.venv
 .env
 *.json
+*.ndjson
 __pycache__
 config.yaml
 priv_key.pem

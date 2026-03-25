@@ -1,16 +1,16 @@
-from pydantic import BaseModel
-from koi_net.config.full_node import (
+from pydantic import BaseModel, Field
+from koi_net.config import (
     FullNodeConfig, 
     KoiNetConfig, 
-    NodeProfile, 
+    FullNodeProfile, 
+    EnvConfig
 )
-from koi_net.config.core import EnvConfig
 
 
 class DebugEnvConfig(EnvConfig):
-    slack_bot_token: str = "SLACK_BOT_TOKEN"
-    slack_signing_secret: str = "SLACK_SIGNING_SECRET"
-    slack_app_token: str = "SLACK_APP_TOKEN"
+    slack_bot_token: str
+    slack_signing_secret: str
+    slack_app_token: str
     
 class DebugConfig(BaseModel):
     slack_channel: str | None = None
@@ -18,6 +18,6 @@ class DebugConfig(BaseModel):
 class DebugNodeConfig(FullNodeConfig):
     koi_net: KoiNetConfig = KoiNetConfig(
         node_name="debug",
-        node_profile=NodeProfile())
-    env: DebugEnvConfig = DebugEnvConfig()
+        node_profile=FullNodeProfile())
+    env: DebugEnvConfig = Field(default_factory=DebugEnvConfig)
     debug: DebugConfig = DebugConfig()

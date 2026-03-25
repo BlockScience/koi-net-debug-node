@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "koi-net-debug-node"
-version = "1.0.0"
+version = "0.1.0"
 description = "Implementation of KOI-net debug node in Python"
 authors = [
     {name = "Luke Miller", email = "luke@block.science"}
@@ -13,8 +13,8 @@ readme = "README.md"
 requires-python = ">=3.10"
 # license = {file = "LICENSE"}
 dependencies = [
-    "koi-net~=1.2.2",
-    "slack_bolt>=1.26.0",
+    "koi-net>=2.02,<3",
+    "slack_bolt>=1.26.0"
 ]
 
 [project.optional-dependencies]

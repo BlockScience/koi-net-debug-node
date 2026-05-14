@@ -25,7 +25,7 @@ class DashboardReporter(KnowledgeHandler):
             
             url = None
             if type(kobj.rid) == SlackMessage:
-                url = f"https://blockscienceteam.slack.com/archives/{kobj.rid.channel_id}/p{kobj.rid.ts.replace('.', '')}"
+                url = f"https://dynamicalsystemsgroupteam.slack.com/archives/{kobj.rid.channel_id}/p{kobj.rid.ts.replace('.', '')}"
             elif type(kobj.rid) == RIDType.from_string("orn:hackmd.note"):
                 url = f"https://hackmd.io/{kobj.rid.reference}"
                 
